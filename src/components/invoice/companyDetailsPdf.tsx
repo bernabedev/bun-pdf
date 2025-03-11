@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
+import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
-import { Text, View, Image } from "@react-pdf/renderer";
-import { pdfContainers, pdfTypography } from "@/lib/pdfStyles";
+import { pdfContainers, pdfTypography } from "../../lib/pdfStyles";
 
 export const CompanyDetailsPdf: React.FC<CompanyDetails> = ({
   email,

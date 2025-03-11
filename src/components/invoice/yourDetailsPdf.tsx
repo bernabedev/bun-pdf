@@ -2,9 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
-import { Image, Text, View, pdf } from "@react-pdf/renderer";
-import { pdfContainers, pdfTypography } from "@/lib/pdfStyles";
+import { pdfContainers, pdfTypography } from "../../lib/pdfStyles";
 
 export const YourDetailsPDF: React.FC<YourDetails> = ({
   yourEmail,

@@ -1,6 +1,6 @@
-import { pdfContainers } from "@/lib/pdfStyles";
-import { registerFont } from "@/lib/register-font";
 import { Document, Page } from "@react-pdf/renderer";
+import { pdfContainers } from "../../lib/pdfStyles";
+import { registerFont } from "../../lib/register-font";
 import { PdfDetails } from "./pdfDetails";
 registerFont;
 

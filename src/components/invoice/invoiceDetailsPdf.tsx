@@ -1,7 +1,7 @@
-import React from "react";
 import { Text, View } from "@react-pdf/renderer";
-import { currencyList } from "@/lib/currency";
-import { pdfTypography, pdfUtils } from "@/lib/pdfStyles";
+import React from "react";
+import { currencyList } from "../../lib/currency";
+import { pdfTypography, pdfUtils } from "../../lib/pdfStyles";
 
 export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
   note,

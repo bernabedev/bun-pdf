@@ -1,5 +1,5 @@
-import { pdfUtils } from "@/lib/pdfStyles";
 import { View } from "@react-pdf/renderer";
+import { pdfUtils } from "../../lib/pdfStyles";
 import { InvoiceTermsPdf } from "./InvoiceTermsPdf";
 import { CompanyDetailsPdf } from "./companyDetailsPdf";
 import { InvoiceDetailsPdf } from "./invoiceDetailsPdf";

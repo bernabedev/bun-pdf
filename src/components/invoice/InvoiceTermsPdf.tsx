@@ -1,7 +1,7 @@
-import React from "react";
 import { Text, View } from "@react-pdf/renderer";
 import { format } from "date-fns";
-import { pdfTypography, pdfContainers, pdfUtils } from "@/lib/pdfStyles";
+import React from "react";
+import { pdfContainers, pdfTypography, pdfUtils } from "../../lib/pdfStyles";
 
 export const InvoiceTermsPdf: React.FC<InvoiceTerms> = ({
   invoiceNumber,
