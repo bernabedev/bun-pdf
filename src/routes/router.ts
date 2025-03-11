@@ -1,4 +1,4 @@
-import { HomeController } from "@/controllers/home-controller";
+import { HomeController } from "../controllers/home-controller";
 import { ApiRouter } from "./api-router";
 import { StaticRouter } from "./static-router";
 

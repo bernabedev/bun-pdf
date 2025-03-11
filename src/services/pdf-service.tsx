@@ -1,5 +1,5 @@
-import InvoicePDF from "@/components/invoice/invoice-pdf";
 import { pdf } from "@react-pdf/renderer";
+import InvoicePDF from "../components/invoice/invoice-pdf";
 import type { InvoicePDFData } from "../schemas/invoice";
 
 export class PdfService {
