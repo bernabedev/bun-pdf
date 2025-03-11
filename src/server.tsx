@@ -1,9 +1,12 @@
 import { pdf } from "@react-pdf/renderer";
 import { existsSync } from "fs";
-import { renderToReadableStream } from "react-dom/server";
+import { QRCodeSVG } from "qrcode.react";
+import { renderToReadableStream, renderToString } from "react-dom/server";
 import HomePage from "./components/home/home-page";
 import InvoicePDF from "./components/invoice/invoice-pdf";
+import ShippingLabelGenerator from "./components/shipping/shipping-label";
 import { getContentType } from "./lib/helpers";
+import { svgToDataUri } from "./lib/svg-to-uri";
 import { InvoicePDFSchema } from "./schemas/invoice";
 
 Bun.serve({
@@ -54,6 +57,22 @@ Bun.serve({
       const validatedData = validationResult.data;
       const blob = await pdf(
         <InvoicePDF data={{ ...validatedData, lang }} />
+      ).toBlob();
+
+      return new Response(blob, {
+        headers: { "Content-Type": "application/pdf" },
+      });
+    } else if (url.pathname === "/api/pdf/shipping-label") {
+      if (req.method !== "POST") {
+        return new Response("Method Not Allowed", { status: 405 });
+      }
+
+      const qrCode = <QRCodeSVG value="DEMO" size={60} />;
+      const dataUri = await svgToDataUri(renderToString(qrCode));
+
+      // const body = await req.json();
+      const blob = await pdf(
+        <ShippingLabelGenerator qrURI={dataUri} />
       ).toBlob();
 
       return new Response(blob, {
