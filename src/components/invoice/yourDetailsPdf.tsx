@@ -2,11 +2,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { $t } from "@/lib/helpers";
 import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { pdfContainers, pdfTypography } from "../../lib/pdfStyles";
 
-export const YourDetailsPDF: React.FC<YourDetails> = ({
+export const YourDetailsPDF: React.FC<YourDetails & { lang: string }> = ({
   yourEmail,
   yourName,
   yourAddress,
@@ -16,9 +17,12 @@ export const YourDetailsPDF: React.FC<YourDetails> = ({
   yourLogo,
   yourTaxId,
   yourZip,
+  lang,
 }) => (
   <View style={pdfContainers.YourDetails}>
-    <Text style={{ ...pdfTypography.title, marginBottom: 14 }}>From</Text>
+    <Text style={{ ...pdfTypography.title, marginBottom: 14 }}>
+      {$t("from", lang)}
+    </Text>
 
     <View style={pdfContainers.imageContainer}>
       {yourLogo && (
@@ -39,7 +43,11 @@ export const YourDetailsPDF: React.FC<YourDetails> = ({
         </Text>
       )}
       {yourCountry && <Text style={{ marginBottom: 4 }}>{yourCountry}</Text>}
-      {yourTaxId && <Text>Tax ID:{yourTaxId}</Text>}
+      {yourTaxId && (
+        <Text>
+          {$t("tax_id", lang)}:{yourTaxId}
+        </Text>
+      )}
     </View>
   </View>
 );

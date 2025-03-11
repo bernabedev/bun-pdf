@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
+import { $t } from "@/lib/helpers";
 import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { pdfContainers, pdfTypography } from "../../lib/pdfStyles";
 
-export const CompanyDetailsPdf: React.FC<CompanyDetails> = ({
+export const CompanyDetailsPdf: React.FC<CompanyDetails & { lang: string }> = ({
   email,
   companyName,
   companyAddress,
@@ -14,9 +15,12 @@ export const CompanyDetailsPdf: React.FC<CompanyDetails> = ({
   companyLogo,
   companyTaxId,
   companyZip,
+  lang,
 }) => (
   <View style={pdfContainers.CompanyDetails}>
-    <Text style={{ ...pdfTypography.title, marginBottom: 14 }}>To</Text>
+    <Text style={{ ...pdfTypography.title, marginBottom: 14 }}>
+      {$t("to", lang)}
+    </Text>
     <View style={pdfContainers.imageContainer}>
       {companyLogo && (
         <Image src={companyLogo} style={{ height: 40, borderRadius: 6 }} />
@@ -42,7 +46,11 @@ export const CompanyDetailsPdf: React.FC<CompanyDetails> = ({
       {companyCountry && (
         <Text style={{ marginBottom: 4 }}>{companyCountry}</Text>
       )}
-      {companyTaxId && <Text>Tax ID: {companyTaxId}</Text>}
+      {companyTaxId && (
+        <Text>
+          {$t("tax_id", lang)}: {companyTaxId}
+        </Text>
+      )}
     </View>
   </View>
 );

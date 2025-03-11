@@ -13,7 +13,9 @@ export const PdfDetails = ({
   paymentDetails,
   invoiceTerms,
   countryImageUrl,
+  lang,
 }: {
+  lang: string;
   yourDetails: YourDetails;
   companyDetails: CompanyDetails;
   invoiceDetails: InvoiceItemDetails;
@@ -22,7 +24,7 @@ export const PdfDetails = ({
   countryImageUrl: string;
 }) => (
   <View>
-    <InvoiceTermsPdf {...invoiceTerms} />
+    <InvoiceTermsPdf {...invoiceTerms} lang={lang} />
     <View
       style={{
         display: "flex",
@@ -31,17 +33,18 @@ export const PdfDetails = ({
         ...pdfUtils.borderBottom,
       }}
     >
-      <YourDetailsPDF {...yourDetails} />
-      <CompanyDetailsPdf {...companyDetails} />
+      <YourDetailsPDF {...yourDetails} lang={lang} />
+      <CompanyDetailsPdf {...companyDetails} lang={lang} />
     </View>
     <View>
       <View style={pdfUtils.borderBottom}>
-        <InvoiceDetailsPdf {...invoiceDetails} />
+        <InvoiceDetailsPdf {...invoiceDetails} lang={lang} />
       </View>
       <View>
         <PaymentDetailsPdf
           {...paymentDetails}
           countryImageUrl={countryImageUrl}
+          lang={lang}
         />
       </View>
     </View>

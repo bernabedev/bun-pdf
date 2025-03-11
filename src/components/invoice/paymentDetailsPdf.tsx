@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
+import { $t } from "@/lib/helpers";
 import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { currencyList } from "../../lib/currency";
@@ -8,7 +9,9 @@ interface PaymentDetailsPdfProps extends PaymentDetails {
   countryImageUrl: string;
 }
 
-export const PaymentDetailsPdf: React.FC<PaymentDetailsPdfProps> = ({
+export const PaymentDetailsPdf: React.FC<
+  PaymentDetailsPdfProps & { lang: string }
+> = ({
   bankName,
   accountNumber,
   accountName,
@@ -17,6 +20,7 @@ export const PaymentDetailsPdf: React.FC<PaymentDetailsPdfProps> = ({
   ifscCode,
   currency = "INR",
   countryImageUrl,
+  lang,
 }) => {
   const currencyDetails = currencyList.find(
     (currencyDetail) =>
@@ -143,7 +147,7 @@ export const PaymentDetailsPdf: React.FC<PaymentDetailsPdfProps> = ({
         }}
       >
         <Text style={{ ...pdfTypography.title, paddingBottom: 12 }}>
-          Payable in
+          {$t("payable_in", lang)}
         </Text>
         {currencyDetails && (
           <View style={{ ...pdfUtils.flexRowItemCenter, gap: 8 }}>

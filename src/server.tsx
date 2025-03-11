@@ -18,6 +18,9 @@ Bun.serve({
       if (req.method !== "POST") {
         return new Response("Method Not Allowed", { status: 405 });
       }
+
+      const lang = url.searchParams.get("lang") ?? "en";
+
       const body = await req.json();
       const validationResult = InvoicePDFSchema.safeParse(body);
 
@@ -34,7 +37,9 @@ Bun.serve({
         );
       }
       const validatedData = validationResult.data;
-      const blob = await pdf(<InvoicePDF data={validatedData} />).toBlob();
+      const blob = await pdf(
+        <InvoicePDF data={{ ...validatedData, lang }} />
+      ).toBlob();
 
       return new Response(blob, {
         headers: { "Content-Type": "application/pdf" },

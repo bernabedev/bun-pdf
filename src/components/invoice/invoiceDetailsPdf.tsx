@@ -1,15 +1,12 @@
+import { $t } from "@/lib/helpers";
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { currencyList } from "../../lib/currency";
 import { pdfTypography, pdfUtils } from "../../lib/pdfStyles";
 
-export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
-  note,
-  discount,
-  taxRate,
-  items,
-  currency = "INR",
-}) => {
+export const InvoiceDetailsPdf: React.FC<
+  InvoiceItemDetails & { lang: string }
+> = ({ note, discount, taxRate, items, currency = "INR", lang }) => {
   const currencyType = currency;
   const currencyDetails = currencyList.find(
     (currency) => currency.value.toLowerCase() === currencyType.toLowerCase()
@@ -23,7 +20,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
     <View>
       <View style={pdfUtils.flexRowItemCenter}>
         <View style={{ flex: 1, paddingHorizontal: 40, paddingVertical: 16 }}>
-          <Text style={pdfTypography.title}>Description</Text>
+          <Text style={pdfTypography.title}>{$t("description", lang)}</Text>
         </View>
         <View
           style={{
@@ -34,13 +31,13 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
           }}
         >
           <View style={{ flex: 1 }}>
-            <Text style={pdfTypography.title}>QTY</Text>
+            <Text style={pdfTypography.title}>{$t("qty", lang)}</Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={pdfTypography.title}>Price</Text>
+            <Text style={pdfTypography.title}>{$t("price", lang)}</Text>
           </View>
           <View style={{ flex: 1, textAlign: "right" }}>
-            <Text style={pdfTypography.title}>Amount</Text>
+            <Text style={pdfTypography.title}>{$t("amount", lang)}</Text>
           </View>
         </View>
       </View>
@@ -95,7 +92,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
         <View style={{ flex: 1, paddingTop: 24 }}>
           {note && (
             <View style={{ paddingHorizontal: 40 }}>
-              <Text style={pdfTypography.title}>Note</Text>
+              <Text style={pdfTypography.title}>{$t("note", lang)}</Text>
               <Text style={pdfTypography.itemDescription}>{note}</Text>
             </View>
           )}
@@ -110,7 +107,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
             }}
           >
             <Text style={{ ...pdfTypography.itemDescription, flex: 1 }}>
-              Subtotal
+              {$t("subtotal", lang)}
             </Text>
             <Text
               style={{
@@ -133,7 +130,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
               }}
             >
               <Text style={{ ...pdfTypography.itemDescription, flex: 1 }}>
-                Discount
+                {$t("discount", lang)}
               </Text>
               <Text
                 style={{
@@ -157,7 +154,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
               }}
             >
               <Text style={{ ...pdfTypography.itemDescription, flex: 1 }}>
-                Tax ({taxRate})%
+                {$t("tax", lang)} ({taxRate})%
               </Text>
               <Text
                 style={{
@@ -179,7 +176,7 @@ export const InvoiceDetailsPdf: React.FC<InvoiceItemDetails> = ({
             }}
           >
             <Text style={{ ...pdfTypography.itemDescription, flex: 1 }}>
-              Amount
+              {$t("amount", lang)}
             </Text>
             <Text
               style={{ ...pdfTypography.amount, textAlign: "right", flex: 1 }}

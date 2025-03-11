@@ -1,16 +1,18 @@
+import { $t } from "@/lib/helpers";
 import { Text, View } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import React from "react";
 import { pdfContainers, pdfTypography, pdfUtils } from "../../lib/pdfStyles";
 
-export const InvoiceTermsPdf: React.FC<InvoiceTerms> = ({
+export const InvoiceTermsPdf: React.FC<InvoiceTerms & { lang: string }> = ({
   invoiceNumber,
   issueDate,
   dueDate,
+  lang,
 }) => (
   <View style={pdfContainers.invoiceTerms}>
     <View style={{ flex: 1 }}>
-      <Text style={pdfTypography.title}>Invoice NO</Text>
+      <Text style={pdfTypography.title}>{$t("invoice_no", lang)}</Text>
       <Text style={pdfTypography.subTitle}>{invoiceNumber}</Text>
     </View>
     <View
@@ -22,13 +24,13 @@ export const InvoiceTermsPdf: React.FC<InvoiceTerms> = ({
       }}
     >
       <View>
-        <Text style={pdfTypography.title}>Issued</Text>
+        <Text style={pdfTypography.title}>{$t("issued", lang)}</Text>
         <Text style={pdfTypography.subTitle}>
           {issueDate ? format(issueDate, "do MMM yyyy") : ""}
         </Text>
       </View>
       <View>
-        <Text style={pdfTypography.title}>Due Date</Text>
+        <Text style={pdfTypography.title}>{$t("due_date", lang)}</Text>
         <Text style={pdfTypography.subTitle}>
           {dueDate ? format(dueDate, "do MMM yyyy") : ""}
         </Text>

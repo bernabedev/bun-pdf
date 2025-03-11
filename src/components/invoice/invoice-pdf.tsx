@@ -12,6 +12,7 @@ type Props = {
     paymentDetails: PaymentDetails;
     invoiceTerms: InvoiceTerms;
     countryImageUrl?: string;
+    lang?: string;
   };
 };
 export default function InvoicePDF(props: Props) {
@@ -23,6 +24,7 @@ export default function InvoicePDF(props: Props) {
       paymentDetails,
       invoiceTerms,
       countryImageUrl,
+      lang = "en",
     },
   } = props;
 
@@ -39,6 +41,7 @@ export default function InvoicePDF(props: Props) {
             countryImageUrl ??
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ-jfVkWV3aJSGYUpsaKGcZ8zNHmKMUJqOHJ4lvG9lmRH-3QMarLWJVmEM0ewN&s=10"
           }
+          lang={lang}
         />
       </Page>
     </Document>
