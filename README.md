@@ -13,7 +13,7 @@ A minimalist API service built with [Bun](https://bun.sh) for generating PDF doc
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/bun-pdf.git
+git clone https://github.com/bernabedev/bun-pdf.git
 cd bun-pdf
 
 # Install dependencies
