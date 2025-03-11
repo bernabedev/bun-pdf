@@ -1,10 +1,18 @@
 import { pdf } from "@react-pdf/renderer";
+import { renderToReadableStream } from "react-dom/server";
+import HomePage from "./components/home/home-page";
 import InvoicePDF from "./components/invoice/invoice-pdf";
 import { InvoicePDFSchema } from "./schemas/invoice";
-
 Bun.serve({
   async fetch(req) {
     const url = new URL(req.url);
+
+    if (url.pathname === "/") {
+      const stream = await renderToReadableStream(<HomePage />);
+      return new Response(stream, {
+        headers: { "Content-Type": "text/html" },
+      });
+    }
 
     if (url.pathname === "/api/pdf/invoice") {
       if (req.method !== "POST") {
