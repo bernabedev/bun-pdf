@@ -1,15 +1,13 @@
-// src/server.tsx
 import { pdf } from "@react-pdf/renderer";
-import PdfDocument from "./PdfDocument";
-import App from "./App";
+import InvoicePDF from "./components/invoice/invoice-pdf";
 
 Bun.serve({
   async fetch(req) {
     const url = new URL(req.url);
 
-    if (url.pathname === "/") {
+    if (url.pathname === "/api/pdf/invoice") {
       // Generar y devolver el PDF
-      const blob = await pdf(<App />).toBlob();
+      const blob = await pdf(<InvoicePDF />).toBlob();
       return new Response(blob, {
         headers: { "Content-Type": "application/pdf" },
       });
