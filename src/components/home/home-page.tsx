@@ -1,6 +1,10 @@
 export default function HomePage() {
   return (
     <html>
+      <head>
+        <title>PDF Generator</title>
+        <link rel="icon" href="/public/favicon.ico" />
+      </head>
       <body
         style={{
           margin: 0,
@@ -17,7 +21,7 @@ export default function HomePage() {
             alignItems: "center",
           }}
         >
-          <h1>Generate PDF</h1>
+          <h1>PDF Generator</h1>
         </div>
       </body>
     </html>

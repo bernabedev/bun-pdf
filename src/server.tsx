@@ -1,8 +1,10 @@
 import { pdf } from "@react-pdf/renderer";
+import { existsSync } from "fs";
 import { renderToReadableStream } from "react-dom/server";
 import HomePage from "./components/home/home-page";
 import InvoicePDF from "./components/invoice/invoice-pdf";
 import { InvoicePDFSchema } from "./schemas/invoice";
+
 Bun.serve({
   async fetch(req) {
     const url = new URL(req.url);
@@ -12,6 +14,16 @@ Bun.serve({
       return new Response(stream, {
         headers: { "Content-Type": "text/html" },
       });
+    }
+
+    if (url.pathname.startsWith("/public")) {
+      const filePath = url.pathname.replace("/", "");
+      if (existsSync(filePath)) {
+        const file = Bun.file(filePath);
+        return new Response(file, {
+          headers: { "Content-Type": getContentType(filePath) },
+        });
+      }
     }
 
     if (url.pathname === "/api/pdf/invoice") {
@@ -52,3 +64,20 @@ Bun.serve({
 });
 
 console.log("Server is running at http://localhost:3000");
+
+const getContentType = (path: string): string => {
+  const ext = path.split(".").pop();
+  const types: Record<string, string> = {
+    ico: "image/x-icon",
+    png: "image/png",
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    gif: "image/gif",
+    css: "text/css",
+    js: "application/javascript",
+    html: "text/html",
+    json: "application/json",
+    svg: "image/svg+xml",
+  };
+  return types[ext || ""] || "application/octet-stream";
+};
