@@ -1,15 +1,70 @@
-# bun-pdf
+# 📄 Bun PDF API
 
-To install dependencies:
+A minimalist API service built with [Bun](https://bun.sh) for generating PDF documents from React components.
+
+## Features
+
+- 🚀 **Fast PDF Generation** - Powered by Bun's performance
+- 🛡️ **Type Safety** - Data validation with Zod
+- 🧩 **React Components** - Create PDFs from React components
+- 🐳 **Containerized** - Easy deployment with Docker
+
+## Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/yourusername/bun-pdf.git
+cd bun-pdf
+
+# Install dependencies
 bun install
+
+# Start the development server
+bun run src/index.ts
 ```
 
-To run:
+## Docker Usage
 
 ```bash
-bun run index.ts
+# Build and start with Docker Compose
+docker-compose up -d
 ```
 
-This project was created using `bun init` in bun v1.2.2. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## API Endpoints
+
+### Generate Invoice PDF
+
+```
+POST /api/pdf/invoice
+```
+
+Request body must follow the schema defined for invoices:
+
+```typescript
+{
+  clientDetails: YourDetails;
+  companyDetails: CompanyDetails;
+  invoiceDetails: InvoiceItemDetails;
+  paymentDetails: PaymentDetails;
+  invoiceTerms: InvoiceTerms;
+  countryImageUrl?: string;
+}
+```
+
+## Tech Stack
+
+- [Bun](https://bun.sh) - JavaScript runtime & package manager
+- [Zod](https://zod.dev) - Schema validation
+- [@react-pdf/renderer](https://react-pdf.org) - PDF generation from React components
+- [Docker](https://www.docker.com) - Containerization
+
+## Development
+
+```bash
+# Run in development mode with hot reload
+bun --watch src/index.ts
+```
+
+## License
+
+MIT
