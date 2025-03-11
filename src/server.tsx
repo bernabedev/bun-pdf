@@ -1,69 +1,49 @@
-import { pdf } from "@react-pdf/renderer";
-import { existsSync } from "fs";
-import { renderToReadableStream } from "react-dom/server";
-import HomePage from "./components/home/home-page";
-import InvoicePDF from "./components/invoice/invoice-pdf";
-import { getContentType } from "./lib/helpers";
-import { InvoicePDFSchema } from "./schemas/invoice";
+import { Config } from "./config";
+import { ErrorHandler } from "./middleware/error-handler";
+import { RequestLogger } from "./middleware/request-logger";
+import { Router } from "./routes/router";
 
-Bun.serve({
-  async fetch(req) {
+class Server {
+  private router: Router;
+  private requestLogger: RequestLogger;
+  private errorHandler: ErrorHandler;
+
+  constructor(public readonly config: Config) {
+    this.router = new Router();
+    this.requestLogger = new RequestLogger();
+    this.errorHandler = new ErrorHandler(config);
+  }
+
+  start(): void {
+    Bun.serve({
+      port: this.config.port,
+      fetch: this.handleRequest.bind(this),
+    });
+  }
+
+  private async handleRequest(req: Request): Promise<Response> {
     const url = new URL(req.url);
+    let response: Response;
+    try {
+      // Apply middleware
+      await this.requestLogger.handle(req, url);
 
-    if (url.pathname === "/") {
-      const stream = await renderToReadableStream(<HomePage />);
-      return new Response(stream, {
-        headers: { "Content-Type": "text/html" },
-      });
+      // Route the request
+      response = await this.router.handleRequest(req, url);
+    } catch (error) {
+      response = this.errorHandler.handle(error);
     }
 
-    // Serve static files from the public directory
-    if (url.pathname.startsWith("/public")) {
-      const filePath = url.pathname.replace("/", "");
-      if (existsSync(filePath)) {
-        const file = Bun.file(filePath);
-        return new Response(file, {
-          headers: { "Content-Type": getContentType(filePath) },
-        });
-      }
+    const requestId = (req as any).__requestId;
+    if (requestId) {
+      this.requestLogger.logCompletion(requestId, response.status);
     }
 
-    // Handle API requests
-    if (url.pathname === "/api/pdf/invoice") {
-      if (req.method !== "POST") {
-        return new Response("Method Not Allowed", { status: 405 });
-      }
+    return response;
+  }
+}
 
-      const lang = url.searchParams.get("lang") ?? "en";
+const app = new Server(new Config());
+app.start();
 
-      const body = await req.json();
-      const validationResult = InvoicePDFSchema.safeParse(body);
-
-      if (!validationResult.success) {
-        return new Response(
-          JSON.stringify({
-            success: false,
-            errors: validationResult.error.format(),
-          }),
-          {
-            status: 400,
-            headers: { "Content-Type": "application/json" },
-          }
-        );
-      }
-      const validatedData = validationResult.data;
-      const blob = await pdf(
-        <InvoicePDF data={{ ...validatedData, lang }} />
-      ).toBlob();
-
-      return new Response(blob, {
-        headers: { "Content-Type": "application/pdf" },
-      });
-    } else {
-      return new Response("Not Found", { status: 404 });
-    }
-  },
-  port: 3000,
-});
-
-console.log("Server is running at http://localhost:3000");
+console.log(`Server is running on port ${app.config.port}`);
