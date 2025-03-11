@@ -3,6 +3,7 @@ import { existsSync } from "fs";
 import { renderToReadableStream } from "react-dom/server";
 import HomePage from "./components/home/home-page";
 import InvoicePDF from "./components/invoice/invoice-pdf";
+import { getContentType } from "./lib/helpers";
 import { InvoicePDFSchema } from "./schemas/invoice";
 
 Bun.serve({
@@ -16,6 +17,7 @@ Bun.serve({
       });
     }
 
+    // Serve static files from the public directory
     if (url.pathname.startsWith("/public")) {
       const filePath = url.pathname.replace("/", "");
       if (existsSync(filePath)) {
@@ -26,6 +28,7 @@ Bun.serve({
       }
     }
 
+    // Handle API requests
     if (url.pathname === "/api/pdf/invoice") {
       if (req.method !== "POST") {
         return new Response("Method Not Allowed", { status: 405 });
@@ -64,20 +67,3 @@ Bun.serve({
 });
 
 console.log("Server is running at http://localhost:3000");
-
-const getContentType = (path: string): string => {
-  const ext = path.split(".").pop();
-  const types: Record<string, string> = {
-    ico: "image/x-icon",
-    png: "image/png",
-    jpg: "image/jpeg",
-    jpeg: "image/jpeg",
-    gif: "image/gif",
-    css: "text/css",
-    js: "application/javascript",
-    html: "text/html",
-    json: "application/json",
-    svg: "image/svg+xml",
-  };
-  return types[ext || ""] || "application/octet-stream";
-};
