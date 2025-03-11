@@ -1,33 +1,33 @@
-# Usar la imagen oficial de Bun como base
+# Use the official Bun image as the base
 FROM oven/bun:latest as builder
 
-# Crear y establecer el directorio de trabajo
+# Create and set the working directory
 WORKDIR /app
 
-# Copiar archivos de dependencias
+# Copy dependency files
 COPY package.json bun.lockb* ./
 
-# Instalar dependencias
+# Install dependencies
 RUN bun install --frozen-lockfile
 
-# Copiar el resto del código fuente
+# Copy the rest of the source code
 COPY . .
 
-# Compilar la aplicación (si es necesario)
+# Build the application (if necessary)
 # RUN bun run build
 
-# Etapa de producción
+# Production stage
 FROM oven/bun:latest
 
 WORKDIR /app
 
-# Copiar los archivos necesarios desde la etapa de construcción
+# Copy necessary files from the build stage
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/src ./src
 
-# Exponer el puerto que la aplicación utiliza
+# Expose the port the application uses
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación
+# Command to run the application
 CMD ["bun", "run", "src/server.tsx"]
