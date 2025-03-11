@@ -1,13 +1,33 @@
 import { pdf } from "@react-pdf/renderer";
 import InvoicePDF from "./components/invoice/invoice-pdf";
+import { InvoicePDFSchema } from "./schemas/invoice";
 
 Bun.serve({
   async fetch(req) {
     const url = new URL(req.url);
 
     if (url.pathname === "/api/pdf/invoice") {
-      // Generar y devolver el PDF
-      const blob = await pdf(<InvoicePDF />).toBlob();
+      if (req.method !== "POST") {
+        return new Response("Method Not Allowed", { status: 405 });
+      }
+      const body = await req.json();
+      const validationResult = InvoicePDFSchema.safeParse(body);
+
+      if (!validationResult.success) {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            errors: validationResult.error.format(),
+          }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      }
+      const validatedData = validationResult.data;
+      const blob = await pdf(<InvoicePDF data={validatedData} />).toBlob();
+
       return new Response(blob, {
         headers: { "Content-Type": "application/pdf" },
       });

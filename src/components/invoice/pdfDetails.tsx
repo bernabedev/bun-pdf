@@ -1,10 +1,10 @@
+import { pdfUtils } from "@/lib/pdfStyles";
 import { View } from "@react-pdf/renderer";
-import { YourDetailsPDF } from "./yourDetailsPdf";
 import { InvoiceTermsPdf } from "./InvoiceTermsPdf";
 import { CompanyDetailsPdf } from "./companyDetailsPdf";
 import { InvoiceDetailsPdf } from "./invoiceDetailsPdf";
 import { PaymentDetailsPdf } from "./paymentDetailsPdf";
-import { pdfUtils } from "@/lib/pdfStyles";
+import { YourDetailsPDF } from "./yourDetailsPdf";
 
 export const PdfDetails = ({
   yourDetails,
