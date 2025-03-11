@@ -1,7 +1,7 @@
-import { $t } from "@/lib/helpers";
 import { Text, View } from "@react-pdf/renderer";
 import { format } from "date-fns";
 import React from "react";
+import { $t } from "../../lib/helpers";
 import { pdfContainers, pdfTypography, pdfUtils } from "../../lib/pdfStyles";
 
 export const InvoiceTermsPdf: React.FC<InvoiceTerms & { lang: string }> = ({

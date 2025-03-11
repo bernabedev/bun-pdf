@@ -2,9 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { $t } from "@/lib/helpers";
 import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
+import { $t } from "../../lib/helpers";
 import { pdfContainers, pdfTypography } from "../../lib/pdfStyles";
 
 export const YourDetailsPDF: React.FC<YourDetails & { lang: string }> = ({

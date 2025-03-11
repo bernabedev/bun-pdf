@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
-import { $t } from "@/lib/helpers";
 import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
+import { $t } from "../../lib/helpers";
 import { pdfContainers, pdfTypography } from "../../lib/pdfStyles";
 
 export const CompanyDetailsPdf: React.FC<CompanyDetails & { lang: string }> = ({

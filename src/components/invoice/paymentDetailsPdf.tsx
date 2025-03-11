@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { $t } from "@/lib/helpers";
 import { Image, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { currencyList } from "../../lib/currency";
+import { $t } from "../../lib/helpers";
 import { pdfTypography, pdfUtils } from "../../lib/pdfStyles";
 
 interface PaymentDetailsPdfProps extends PaymentDetails {

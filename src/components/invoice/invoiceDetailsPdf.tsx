@@ -1,7 +1,7 @@
-import { $t } from "@/lib/helpers";
 import { Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { currencyList } from "../../lib/currency";
+import { $t } from "../../lib/helpers";
 import { pdfTypography, pdfUtils } from "../../lib/pdfStyles";
 
 export const InvoiceDetailsPdf: React.FC<

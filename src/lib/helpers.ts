@@ -3,7 +3,7 @@ type Locales = Record<string, Record<string, string>>;
 const locales: Locales = {};
 const languages = ["en", "es"];
 
-// Cargar los archivos de traducción con Bun.file
+// Load translation files using Bun.file
 const loadLocales = async () => {
   for (const lang of languages) {
     const file = Bun.file(`src/locales/${lang}.json`);
@@ -11,10 +11,10 @@ const loadLocales = async () => {
   }
 };
 
-// Llamar a la carga de locales antes de usarlos
+// Call locale loading before using them
 await loadLocales();
 
-// Función para obtener la traducción
+// Function to get the translation
 export const $t = (key: string, lang: string = "en"): string => {
-  return locales[lang]?.[key] || key; // Devuelve la clave si no encuentra traducción
+  return locales[lang]?.[key] || key; // Returns the key if no translation is found
 };
