@@ -1,20 +1,20 @@
 import {
-  US,
-  IN,
-  EU,
-  JP,
-  KR,
-  IL,
-  VN,
   BD,
-  RU,
   BR,
-  UA,
-  KZ,
-  TW,
+  DO,
+  EU,
   GB,
   ID,
-  DO,
+  IL,
+  IN,
+  JP,
+  KR,
+  KZ,
+  RU,
+  TW,
+  UA,
+  US,
+  VN,
   type FlagComponent,
 } from "country-flag-icons/react/1x1";
 
@@ -31,15 +31,15 @@ export const currencyList: {
   };
 }[] = [
   {
-    value: "DO",
-    label: "DO",
+    value: "DOP",
+    label: "DOP",
     details: {
       country: "Dominican Republic",
       currencySymbol: "RD$",
       currencyName: "Dominican Peso",
-      currencyShortForm: "DO",
+      currencyShortForm: "DOP",
       icon: DO,
-      iconName: "DO",
+      iconName: "DOP",
     },
   },
   {
