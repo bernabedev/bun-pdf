@@ -1,8 +1,8 @@
-import ShippingLabelHtml from "@/components/shipping/shipping-label-html";
 import { pdf } from "@react-pdf/renderer";
 import { renderToReadableStream } from "react-dom/server";
 import InvoicePDF from "../components/invoice/invoice-pdf";
 import ShippingLabel from "../components/shipping/shipping-label";
+import ShippingLabelHtml from "../components/shipping/shipping-label-html";
 import type { InvoicePDFData } from "../schemas/invoice";
 
 export class PdfService {
