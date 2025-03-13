@@ -19,183 +19,209 @@ export default function ShippingLabelHtml() {
   };
 
   return (
-    <div
+    <body
       style={{
-        fontFamily: "Arial, sans-serif",
-        width: 432,
-        height: 288,
-        border: "2px solid #333",
-        borderRadius: "8px",
-        padding: "20px",
-        backgroundColor: "#fff",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        margin: "0 auto",
+        margin: 0,
+        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont",
       }}
     >
       <div
         style={{
           display: "flex",
+          justifyContent: "center",
           alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: "15px",
-          borderBottom: "1px solid #eee",
-          paddingBottom: "10px",
+          height: "100vh",
         }}
       >
+        {/* Container with exact 4x6 inch dimensions and rotation */}
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
+            width: "432px",
+            height: "288px",
+            transform: "rotate(90deg)",
+            transformOrigin: "center center",
+            position: "relative",
           }}
         >
-          {/* Simple logo */}
+          {/* Actual label content */}
           <div
             style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              backgroundColor: "#000",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              fontFamily: "Arial, sans-serif",
+              border: "2px solid #333",
+              borderRadius: "8px",
+              padding: "16px",
+              backgroundColor: "#fff",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              boxSizing: "border-box",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: "10px",
+              flexDirection: "column",
             }}
           >
-            <span
+            <div
               style={{
-                color: "white",
-                fontWeight: "bold",
-                fontSize: "18px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "12px",
+                borderBottom: "1px solid #eee",
+                paddingBottom: "8px",
               }}
             >
-              <Isotipo style={{ width: 26, height: 26 }} />
-            </span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {/* Logo */}
+                <div
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    backgroundColor: "#000",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: "8px",
+                  }}
+                >
+                  <Isotipo style={{ width: 24, height: 24 }} color="#fff" />
+                </div>
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "16px",
+                    color: "#333",
+                  }}
+                >
+                  {shipment.carrier}
+                </span>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "#f1f1f1",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                  fontSize: "11px",
+                }}
+              >
+                {shipment.date}
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                marginBottom: "16px",
+              }}
+            >
+              {/* From section */}
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    fontSize: "11px",
+                    color: "#666",
+                    marginBottom: "2px",
+                  }}
+                >
+                  FROM:
+                </div>
+                <div
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {shipment.from.name}
+                </div>
+                <div style={{ fontSize: "12px" }}>{shipment.from.address}</div>
+                <div style={{ fontSize: "12px" }}>{shipment.from.city}</div>
+              </div>
+
+              {/* To section */}
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    fontSize: "11px",
+                    color: "#666",
+                    marginBottom: "2px",
+                  }}
+                >
+                  TO:
+                </div>
+                <div
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {shipment.to.name}
+                </div>
+                <div style={{ fontSize: "12px" }}>{shipment.to.address}</div>
+                <div style={{ fontSize: "12px" }}>{shipment.to.city}</div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                marginBottom: "12px",
+                padding: "8px",
+                backgroundColor: "#f8f8f8",
+                borderRadius: "4px",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "11px",
+                  color: "#666",
+                  marginBottom: "2px",
+                }}
+              >
+                TRACKING NUMBER:
+              </div>
+              <div
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  letterSpacing: "1px",
+                }}
+              >
+                {shipment.trackingNumber}
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                fontSize: "12px",
+                marginTop: "auto",
+              }}
+            >
+              <div>Weight: {shipment.weight}</div>
+              <div>
+                {/* Barcode */}
+                <div
+                  style={{
+                    height: "32px",
+                    width: "140px",
+                    backgroundImage:
+                      "linear-gradient(90deg, #000 2px, transparent 2px, transparent 4px, #000 4px, #000 6px, transparent 6px, transparent 8px, #000 8px, #000 10px, transparent 10px, transparent 12px, #000 12px, #000 14px)",
+                    backgroundSize: "16px 100%",
+                    backgroundRepeat: "repeat-x",
+                  }}
+                ></div>
+              </div>
+            </div>
           </div>
-          <span
-            style={{
-              fontWeight: "bold",
-              fontSize: "18px",
-              color: "#333",
-            }}
-          >
-            {shipment.carrier}
-          </span>
-        </div>
-        <div
-          style={{
-            backgroundColor: "#f1f1f1",
-            padding: "5px 10px",
-            borderRadius: "4px",
-            fontSize: "12px",
-          }}
-        >
-          {shipment.date}
         </div>
       </div>
-
-      <div
-        style={{
-          display: "flex",
-          marginBottom: "20px",
-        }}
-      >
-        {/* From section */}
-        <div style={{ flex: 1 }}>
-          <div
-            style={{
-              fontSize: "12px",
-              color: "#666",
-              marginBottom: "3px",
-            }}
-          >
-            FROM:
-          </div>
-          <div
-            style={{
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            {shipment.from.name}
-          </div>
-          <div style={{ fontSize: "14px" }}>{shipment.from.address}</div>
-          <div style={{ fontSize: "14px" }}>{shipment.from.city}</div>
-        </div>
-
-        {/* To section */}
-        <div style={{ flex: 1 }}>
-          <div
-            style={{
-              fontSize: "12px",
-              color: "#666",
-              marginBottom: "3px",
-            }}
-          >
-            TO:
-          </div>
-          <div
-            style={{
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            {shipment.to.name}
-          </div>
-          <div style={{ fontSize: "14px" }}>{shipment.to.address}</div>
-          <div style={{ fontSize: "14px" }}>{shipment.to.city}</div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          marginBottom: "15px",
-          padding: "10px",
-          backgroundColor: "#f8f8f8",
-          borderRadius: "4px",
-        }}
-      >
-        <div
-          style={{
-            fontSize: "12px",
-            color: "#666",
-            marginBottom: "3px",
-          }}
-        >
-          TRACKING NUMBER:
-        </div>
-        <div
-          style={{
-            fontSize: "18px",
-            fontWeight: "bold",
-            letterSpacing: "1px",
-          }}
-        >
-          {shipment.trackingNumber}
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          fontSize: "14px",
-        }}
-      >
-        <div>Weight: {shipment.weight}</div>
-        <div>
-          {/* Barcode representation (simplified) */}
-          <div
-            style={{
-              height: "40px",
-              width: "150px",
-              backgroundImage:
-                "linear-gradient(90deg, #000 2px, transparent 2px, transparent 4px, #000 4px, #000 6px, transparent 6px, transparent 8px, #000 8px, #000 10px, transparent 10px, transparent 12px, #000 12px, #000 14px)",
-              backgroundSize: "16px 100%",
-              backgroundRepeat: "repeat-x",
-            }}
-          ></div>
-        </div>
-      </div>
-    </div>
+    </body>
   );
 }
