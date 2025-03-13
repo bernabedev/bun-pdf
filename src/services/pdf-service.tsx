@@ -1,7 +1,9 @@
+import ShippingLabelHtml from "@/components/shipping/shipping-label-html";
 import { pdf } from "@react-pdf/renderer";
+import { renderToReadableStream } from "react-dom/server";
 import InvoicePDF from "../components/invoice/invoice-pdf";
-import type { InvoicePDFData } from "../schemas/invoice";
 import ShippingLabel from "../components/shipping/shipping-label";
+import type { InvoicePDFData } from "../schemas/invoice";
 
 export class PdfService {
   async generateInvoicePDF(data: InvoicePDFData, lang: string): Promise<Blob> {
@@ -9,6 +11,13 @@ export class PdfService {
     const pdfDoc = pdf(<InvoicePDF data={{ ...data, lang }} />);
 
     return await pdfDoc.toBlob();
+  }
+
+  async generateInvoiceHtml(data: InvoicePDFData, lang: string) {
+    const stream = await renderToReadableStream(
+      <InvoicePDF data={{ ...data, lang }} />
+    );
+    return stream;
   }
 
   async generateShippingLabelPDF(): Promise<Blob> {
@@ -19,5 +28,10 @@ export class PdfService {
     // const arrayBuffer = await blob.arrayBuffer();
     // await Bun.write("shipping-label.pdf", new Uint8Array(arrayBuffer));
     return blob;
+  }
+
+  async generateShippingLabelHtml() {
+    const stream = await renderToReadableStream(<ShippingLabelHtml />);
+    return stream;
   }
 }
