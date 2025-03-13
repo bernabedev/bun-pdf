@@ -13,6 +13,11 @@ export class ApiRouter {
       return this.pdfController.generateInvoicePDF(req, url);
     }
 
+    // PDF shipping label generation
+    if (url.pathname === "/api/pdf/shipping-label") {
+      return this.pdfController.generateShippingLabelPDF(req, url);
+    }
+
     // Add more API routes here
 
     return new Response("API Endpoint Not Found", { status: 404 });

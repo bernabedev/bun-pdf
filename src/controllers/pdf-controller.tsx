@@ -57,4 +57,19 @@ export class PdfController {
       );
     }
   }
+
+  async generateShippingLabelPDF(req: Request, url: URL): Promise<Response> {
+    if (req.method !== "POST") {
+      return new Response("Method Not Allowed", { status: 405 });
+    }
+
+    const blob = await this.pdfService.generateShippingLabelPDF();
+
+    return new Response(blob, {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `attachment; filename="shipping-label.pdf"`,
+      },
+    });
+  }
 }
